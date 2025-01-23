@@ -6,6 +6,7 @@
   "scripts": {
     "dev": "vite",
     "build": "run-p type-check \"build-only {@}\" --",
+    "deploy": "npm run build && gh-pages -d dist",
     "preview": "vite preview",
     "test:e2e": "start-server-and-test preview http://localhost:4173 'cypress run --e2e'",
     "test:e2e:dev": "start-server-and-test 'vite dev --port 4173' http://localhost:4173 'cypress open --e2e'",
@@ -33,6 +34,7 @@
     "eslint": "^9.14.0",
     "eslint-plugin-cypress": "^4.1.0",
     "eslint-plugin-vue": "^9.30.0",
+    "gh-pages": "^6.3.0",
     "npm-run-all2": "^7.0.2",
     "postcss": "^8.5.1",
     "prettier": "^3.3.3",
