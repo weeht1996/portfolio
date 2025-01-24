@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, computed } from "vue";
+import { ref, computed, onMounted } from "vue";
 
 interface Props {
   images: string[];
@@ -8,9 +8,10 @@ interface Props {
 };
 
 const props = defineProps<Props>();
+const loadedImages = ref<string[]>([]);
 const currentIndex = ref(0);
 
-const currentImage = computed(() => `images/${props.images[currentIndex.value]}`);
+const currentImage = computed(() => loadedImages.value[currentIndex.value]);
 
 const setCurrentImage = (index: number) => {
   currentIndex.value = index;
@@ -27,6 +28,16 @@ function changeIndex(shiftUp: boolean) {
     }
   }
 }
+
+const loadImages = () => {
+  const imageModules = import.meta.glob('@/components/assets/projects/**/*.{jpg,png,jpeg,gif}');
+  loadedImages.value = Object.keys(imageModules).map((path) => {
+    return path.replace('@/components/assets', '/assets');
+  });
+};
+onMounted(() => {
+  loadImages();
+});
 
 </script>
 
@@ -51,13 +62,13 @@ function changeIndex(shiftUp: boolean) {
     </div>
     <div class="w-full flex overflow-x-auto py-4 bg-zinc-800">
       <div
-        v-for="(img, index) in images"
+        v-for="(img, index) in loadedImages"
         :key="index"
         @click="setCurrentImage(index)"
         class="cursor-pointer mx-2"
       >
         <img
-          :src="`images/${img}`"
+          :src="img"
           :alt="`Thumbnail ${index + 1}`"
           :class=" { 'border-2 border-white': index === currentIndex }"
           class="h-24 w-auto object-cover rounded"

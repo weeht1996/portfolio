@@ -1,5 +1,7 @@
 <script setup lang="ts">
 import SectionNavi from './SectionNavi.vue';
+
+import main_background from './assets/main_background.jpg'
 </script>
 
 <template>
@@ -21,7 +23,7 @@ import SectionNavi from './SectionNavi.vue';
         </div>
         <div class="absolute right-0 -top-18 overflow-hidden border-none outline-none p-0 m-0 w-full h-full">
           <img
-            src="/images/pexels-njeromin-12686992.jpg"
+            :src="main_background"
             alt="hero image gradient"
             class="absolute inset-0 w-full h-full object-cover border-none outline-none block m-0 p-0"
           />

@@ -1,101 +1,105 @@
-<script lang="ts">
-import { defineComponent, ref } from 'vue';
-import type { PropType } from 'vue';
-import type { CommitPayload } from '@/types/CommitPayload';
-import type { Project } from '@/types/Project';
+<script setup lang="ts">
+import { ref, defineProps, defineEmits, onMounted } from 'vue';
 import axios from 'axios';
+import { type Project } from '@/types/Project';
+import { type CommitPayload } from '@/types/CommitPayload';
 
-export default defineComponent({
-  props: {
-    projectCard: {
-      type: Object as PropType<Project>,
-      required: true,
-    },
+const props = defineProps({
+  projectCard: {
+    type: Object as () => Project,
+    required: true,
   },
-  emits: ['openOverlay'],
+});
 
-  setup(props) {
-    const latestCommit = ref<CommitPayload | null>(null);
-    const hovered = ref(false);
+const emit = defineEmits(['openOverlay']);
 
-    function formatDate(dateString: string) {
-      const date = new Date(dateString);
-      return new Intl.DateTimeFormat('en-GB', {
-        day: '2-digit',
-        month: 'short',
-        year: 'numeric',
-      }).format(date);
-    }
+const latestCommit = ref<CommitPayload | null>(null);
+const hovered = ref(false);
+const loadedImages = ref<string[]>([]);
 
-    function timeSince(dateString: string) {
-      const now = new Date();
-      const givenDate = new Date(dateString);
+const loadImages = () => {
+  // Glob all images from the projects folder
+  const imageModules = import.meta.glob('@/components/assets/projects/**/*.{jpg,png,jpeg,gif}');
 
-      const differenceInDays = Math.floor((now.getTime() - givenDate.getTime()) / (1000 * 60 * 60 * 24));
+  // Filter images dynamically based on the project folder name
+  loadedImages.value = Object.keys(imageModules).filter((path) => {
+    // Match the folder name dynamically using the prop value
+    return path.includes(`/projects/${props.projectCard.title}/`);
+  }).map((path) => {
+    // Convert the file path to the corresponding public path
+    return path.replace('@/components/assets', '/assets');
+  });
+};
 
-      if (differenceInDays < 7) {
-        return `${differenceInDays} day${differenceInDays !== 1 ? 's' : ''} ago`;
-      }
+const fetchLatestCommit = async () => {
+  try {
+    const owner = 'weeht1996';
+    const response = await axios.get<CommitPayload[]>(
+      `https://api.github.com/repos/${owner}/${props.projectCard.repoName}/commits`
+    );
+    latestCommit.value = response.data[0];
+  } catch (error) {
+    console.error('Error fetching latest commit:', error);
+  }
+};
 
-      const differenceInWeeks = Math.floor(differenceInDays / 7);
-      if (differenceInWeeks < 4) {
-        return `${differenceInWeeks} week${differenceInWeeks !== 1 ? 's' : ''} ago`;
-      }
+const formatDate = (dateString: string) => {
+  const date = new Date(dateString);
+  return new Intl.DateTimeFormat('en-GB', {
+    day: '2-digit',
+    month: 'short',
+    year: 'numeric',
+  }).format(date);
+};
 
-      const differenceInMonths = Math.floor(differenceInDays / 30);
-      if (differenceInMonths < 12) {
-        return `${differenceInMonths} month${differenceInMonths !== 1 ? 's' : ''} ago`;
-      }
+const timeSince = (dateString: string) => {
+  const now = new Date();
+  const givenDate = new Date(dateString);
 
-      const differenceInYears = Math.floor(differenceInDays / 365);
-      return `${differenceInYears} year${differenceInYears !== 1 ? 's' : ''} ago`;
-    }
+  const differenceInDays = Math.floor((now.getTime() - givenDate.getTime()) / (1000 * 60 * 60 * 24));
 
-    const fetchLatestCommit = async () => {
-      try {
-        const owner = 'weeht1996';
+  if (differenceInDays < 7) {
+    return `${differenceInDays} day${differenceInDays !== 1 ? 's' : ''} ago`;
+  }
 
-        const response = await axios.get<CommitPayload[]>(
-          `https://api.github.com/repos/${owner}/${props.projectCard.repoName}/commits`
-        );
+  const differenceInWeeks = Math.floor(differenceInDays / 7);
+  if (differenceInWeeks < 4) {
+    return `${differenceInWeeks} week${differenceInWeeks !== 1 ? 's' : ''} ago`;
+  }
 
-        latestCommit.value = response.data[0];
-      } catch (error) {
-        console.error('Error fetching latest commit:', error);
-      }
-    };
+  const differenceInMonths = Math.floor(differenceInDays / 30);
+  if (differenceInMonths < 12) {
+    return `${differenceInMonths} month${differenceInMonths !== 1 ? 's' : ''} ago`;
+  }
 
-    fetchLatestCommit();
+  const differenceInYears = Math.floor(differenceInDays / 365);
+  return `${differenceInYears} year${differenceInYears !== 1 ? 's' : ''} ago`;
+};
 
-    return {
-      latestCommit,
-      hovered,
-      formatDate,
-      timeSince,
-      fetchLatestCommit,
-    };
-  },
+onMounted(() => {
+  loadImages();
+  fetchLatestCommit();
 });
 </script>
 
 <template>
-  <div class="project-container flex flex-col items-center w-[400px] mt-2" >
+  <div class="project-container flex flex-col items-center w-[400px] mt-2">
     <div class="images-container flex justify-center item relative h-[300px]">
       <button class="img-hover-container w-[380px] h-[300px] p-2 relative" @click="$emit('openOverlay')" @mouseenter="hovered = true" @mouseleave="hovered = false">
-        <div v-for="(img, idx) in projectCard.imgs" :key="idx">
-          <img class="absolute w-[360px] h-[240px] border border-zinc-600 rounded mt-4 transition-trasnform duration-300"
-            :src="`/images/${img}`"
+        <div v-for="(img, idx) in loadedImages" :key="idx">
+          <img class="absolute w-[360px] h-[240px] border border-zinc-600 rounded mt-4 transition-transform duration-300"
+            :src="img"
             :alt="`Image for ${projectCard.title} ${idx + 1}`"
-            :style="{  zIndex: (projectCard.imgs.length - idx), left: `${idx * 10}px`, top: `${idx * 4}px`, transform: hovered ? `rotateY(-15deg)` : 'rotateY(0deg)',}"
+            :style="{  zIndex: (projectCard.imgs.length - idx), left: `${idx * 10}px`, top: `${idx * 4}px`, transform: hovered ? `rotateY(-15deg)` : 'rotateY(0deg)', }"
           />
         </div>
       </button>
     </div>
     <div class="info-container w-full flex flex-col">
       <div class="info-top-bar flex justify-between items-center relative mb-2">
-        <div class="project-title text-2xl w-full text-left" :href=latestCommit?.url>{{projectCard.title}}</div>
+        <div class="project-title text-2xl w-full text-left" :href="latestCommit?.url">{{ projectCard.title }}</div>
         <div class="library-container flex justify-end gap-2 mb-2">
-          <div v-for="lib in projectCard.languages">
+          <div v-for="lib in projectCard.languages" :key="lib.name">
             <img :src="lib.icon" :alt="`${lib.name} icon`" :title="lib.name" width="30px" height="30px" class="hover:shadow-lg hover:shadow-blue-500/50">
           </div>
         </div>
@@ -134,8 +138,7 @@ export default defineComponent({
 </template>
 
 <style scoped>
-  .info-top-bar::after, .info-bot-bar::after
-   {
+  .info-top-bar::after, .info-bot-bar::after {
     content: "";
     position: absolute;
     bottom: -8px;

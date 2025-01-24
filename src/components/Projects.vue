@@ -5,8 +5,8 @@ import SectionNavi from './SectionNavi.vue';
 import { ref } from 'vue';
 
 const project = {
-  title: 'Country Guessr',
-  imgs: ['country_guessr_misc0.PNG', 'country_guessr_misc1.PNG', 'country_guessr_misc2.PNG', 'country_guessr_misc3.PNG'],
+  title: 'CountryGuessr',
+  imgs: ['country_guessr_misc0.png', 'country_guessr_misc1.png', 'country_guessr_misc2.png', 'country_guessr_misc3.png'],
   languages: [
     { name: 'TypeScript', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/typescript/typescript-original.svg' },
     { name: 'ReactJs', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/react/react-original.svg' },
