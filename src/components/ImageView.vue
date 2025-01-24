@@ -7,11 +7,11 @@ interface Props {
   closeOverlay: () => void;
 };
 
+const BASE_URL = import.meta.env.BASE_URL;
 const props = defineProps<Props>();
-const loadedImages = ref<string[]>([]);
 const currentIndex = ref(0);
 
-const currentImage = computed(() => loadedImages.value[currentIndex.value]);
+const currentImage = computed(() => props.images[currentIndex.value]);
 
 const setCurrentImage = (index: number) => {
   currentIndex.value = index;
@@ -29,23 +29,13 @@ function changeIndex(shiftUp: boolean) {
   }
 }
 
-const loadImages = () => {
-  const imageModules = import.meta.glob('@/components/assets/projects/**/*.{jpg,png,jpeg,gif}');
-  loadedImages.value = Object.keys(imageModules).map((path) => {
-    return path.replace('@/components/assets', '/assets');
-  });
-};
-onMounted(() => {
-  loadImages();
-});
-
 </script>
 
 <template>
   <div v-if="showOverlay" class="fixed inset-0 bg-black bg-opacity-90 flex flex-col items-center justify-center z-50">
     <div class="flex-grow flex items-center justify-center w-full relative">
       <img
-        :src="currentImage"
+        :src="`${BASE_URL}images/${currentImage}`"
         alt="Full-size view"
         class="max-h-[80vh] max-w-[80%] object-contain"
       />
@@ -62,13 +52,13 @@ onMounted(() => {
     </div>
     <div class="w-full flex overflow-x-auto py-4 bg-zinc-800">
       <div
-        v-for="(img, index) in loadedImages"
+        v-for="(img, index) in images"
         :key="index"
         @click="setCurrentImage(index)"
         class="cursor-pointer mx-2"
       >
         <img
-          :src="img"
+          :src="`${BASE_URL}images/${img}`"
           :alt="`Thumbnail ${index + 1}`"
           :class=" { 'border-2 border-white': index === currentIndex }"
           class="h-24 w-auto object-cover rounded"

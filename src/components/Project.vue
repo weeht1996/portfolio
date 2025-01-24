@@ -15,21 +15,7 @@ const emit = defineEmits(['openOverlay']);
 
 const latestCommit = ref<CommitPayload | null>(null);
 const hovered = ref(false);
-const loadedImages = ref<string[]>([]);
-
-const loadImages = () => {
-  // Glob all images from the projects folder
-  const imageModules = import.meta.glob('@/components/assets/projects/**/*.{jpg,png,jpeg,gif}');
-
-  // Filter images dynamically based on the project folder name
-  loadedImages.value = Object.keys(imageModules).filter((path) => {
-    // Match the folder name dynamically using the prop value
-    return path.includes(`/projects/${props.projectCard.title}/`);
-  }).map((path) => {
-    // Convert the file path to the corresponding public path
-    return path.replace('@/components/assets', '/assets');
-  });
-};
+const BASE_URL = import.meta.env.BASE_URL;
 
 const fetchLatestCommit = async () => {
   try {
@@ -77,7 +63,6 @@ const timeSince = (dateString: string) => {
 };
 
 onMounted(() => {
-  loadImages();
   fetchLatestCommit();
 });
 </script>
@@ -86,9 +71,9 @@ onMounted(() => {
   <div class="project-container flex flex-col items-center w-[400px] mt-2">
     <div class="images-container flex justify-center item relative h-[300px]">
       <button class="img-hover-container w-[380px] h-[300px] p-2 relative" @click="$emit('openOverlay')" @mouseenter="hovered = true" @mouseleave="hovered = false">
-        <div v-for="(img, idx) in loadedImages" :key="idx">
+        <div v-for="(img, idx) in projectCard.imgs" :key="idx">
           <img class="absolute w-[360px] h-[240px] border border-zinc-600 rounded mt-4 transition-transform duration-300"
-            :src="img"
+            :src="`${BASE_URL}images/${img}`"
             :alt="`Image for ${projectCard.title} ${idx + 1}`"
             :style="{  zIndex: (projectCard.imgs.length - idx), left: `${idx * 10}px`, top: `${idx * 4}px`, transform: hovered ? `rotateY(-15deg)` : 'rotateY(0deg)', }"
           />
