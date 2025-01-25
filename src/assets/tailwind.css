@@ -1,3 +1,9 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer utilities {
+  .responsive-bottom {
+    bottom: clamp(8vh, calc(60vh - 100vw), 15vh);
+  }
+}

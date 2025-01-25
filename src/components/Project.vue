@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, defineProps, defineEmits, onMounted } from 'vue';
+import { ref, defineProps, onMounted } from 'vue';
 import axios from 'axios';
 import { type Project } from '@/types/Project';
 import { type CommitPayload } from '@/types/CommitPayload';
@@ -10,8 +10,6 @@ const props = defineProps({
     required: true,
   },
 });
-
-const emit = defineEmits(['openOverlay']);
 
 const latestCommit = ref<CommitPayload | null>(null);
 const hovered = ref(false);
@@ -68,14 +66,31 @@ onMounted(() => {
 </script>
 
 <template>
-  <div class="project-container flex flex-col items-center w-[400px] mt-2">
-    <div class="images-container flex justify-center item relative h-[300px]">
-      <button class="img-hover-container w-[380px] h-[300px] p-2 relative" @click="$emit('openOverlay')" @mouseenter="hovered = true" @mouseleave="hovered = false">
-        <div v-for="(img, idx) in projectCard.imgs" :key="idx">
-          <img class="absolute w-[360px] h-[240px] border border-zinc-600 rounded mt-4 transition-transform duration-300"
+  <div class="project-container flex flex-col items-start max-w-[400px] mt-2">
+    <div class="images-container relative h-[300px] w-full">
+      <button
+        class="img-hover-container"
+        @click="$emit('openOverlay')"
+        @mouseenter="hovered = true"
+        @mouseleave="hovered = false"
+      >
+        <div
+          v-for="(img, idx) in projectCard.imgs"
+          :key="idx"
+          class="absolute w-full"
+          :style="{
+            zIndex: (projectCard.imgs.length - idx),
+            left: `${idx * 4}px`,
+            top: `${idx * 4}px`,
+          }"
+        >
+          <img
+            class="w-full h-[240px] border border-zinc-600 rounded transition-transform duration-300"
             :src="`${BASE_URL}images/${img}`"
             :alt="`Image for ${projectCard.title} ${idx + 1}`"
-            :style="{  zIndex: (projectCard.imgs.length - idx), left: `${idx * 10}px`, top: `${idx * 4}px`, transform: hovered ? `rotateY(-15deg)` : 'rotateY(0deg)', }"
+            :style="{
+              transform: hovered ? `rotateY(-15deg)` : 'rotateY(0deg)'
+            }"
           />
         </div>
       </button>
@@ -99,7 +114,7 @@ onMounted(() => {
         <div v-if="latestCommit" class="git-commit-container mt-2">
           <div class="git-commit-bar flex flex-1 ml-4 relative p-1 pt-0">
             <div class="box relative z-[1]">
-              <div class="box-small mr-2 -ml-[15px] w-6 h-6 flex justify-center items-center border rounded-full overflow-hidden bg-zinc-950 border-zinc-950">
+              <div class="box-small mr-2 -ml-[15px] w-6 h-6 flex justify-center items-center border rounded-full bg-zinc-950 border-zinc-950">
                 <svg class="inline-block align-text-bottom" width="16px" height="16px" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
                   <path d="M11.93 8.5a4.002 4.002 0 0 1-7.86 0H.75a.75.75 0 0 1 0-1.5h3.32a4.002 4.002 0 0 1 7.86 0h3.32a.75.75 0 0 1 0 1.5Zm-1.43-.75a2.5 2.5 0 1 0-5 0 2.5 2.5 0 0 0 5 0Z" fill="#656d76"/>
                 </svg>

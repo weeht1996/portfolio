@@ -14,10 +14,10 @@ export default defineComponent({
 </script>
 
 <template>
-  <div class="skill-table-container w-full px-4 py-2">
-    <div v-for="(value, key) in Skills" :key="key" class="flex gap-4 mb-2 items-center">
-      <span class="font-semibold">{{ key }}:</span>
+  <ul class="skill-table-container w-full pl-4 py-2 space-y-1 overflow-x-auto">
+    <li v-for="(value, key) in Skills" :key="key" class="flex items-center whitespace-nowrap">
+      <span class="font-semibold mr-2">- {{ key }}:</span>
       <div v-for="skillValue in value" :key="skillValue" class="ml-2">{{ skillValue }}</div>
-    </div>
-  </div>
+    </li>
+  </ul>
 </template>

@@ -34,11 +34,10 @@ onMounted(() => {
       });
     },
     {
-      threshold: 0.5, // Section is considered in view when 50% of it is visible
+      threshold: 0.5,
     }
   );
 
-  // Observe each section
   sectionRefs.value.forEach((section) => {
     if (section) observer.observe(section);
   });
@@ -51,7 +50,7 @@ onMounted(() => {
 </script>
 
 <template>
-  <div class="section-navi-container absolute bottom-8 left-12">
+  <div class="section-navi-container absolute bottom-[2vh] sm:bottom-[4vh] left-[2%]">
     <div class="flex gap-2">
       <div v-for="(section, idx) in sections" :key="idx" class="section-marker hover:cursor-pointer">
         <a href="#" class="p-0" @click.prevent="scrollToSection(idx)">

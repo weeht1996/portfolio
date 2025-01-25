@@ -30,9 +30,9 @@ function closeImgOverlay() {
 </script>
 
 <template>
-  <div id="Projects-section" class="bg-zinc-950 w-full max-w-full text-zinc-300 p-12 flex flex-col border-b border-slate-300 relative overflow-x-hidden">
-    <div class="text-4xl mb-10">Projects</div>
-    <div class="projects-container flex justify-center">
+  <div id="Projects-section" class="bg-zinc-950 w-full text-zinc-300 px-6 sm:px-[2vw] py-12 flex flex-col border-b border-slate-300 relative">
+    <div class="section-header">Projects</div>
+    <div class="projects-container flex justify-center items-center">
       <Project :projectCard="project" @openOverlay="openImgOverlay"/>
     </div>
     <SectionNavi/>

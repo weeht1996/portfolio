@@ -16,7 +16,7 @@ I value routines and self-discipline, which keep me grounded and help me navigat
 Lately, I've been working on improving my communication skills, as I recognize that the ability to clearly articulate ideas is essential to building meaningful connections and achieving success—both personally and professionally.. `;
 const Skills = {
   Languages: ['HTML/CSS', 'Python', 'JavaScript', 'TypeScript', 'Java', 'PHP'],
-  Databases: ['MySQL', 'NoSql experience'],
+  Databases: ['MySQL', 'NoSql'],
   Frameworks: ['ReactJs', 'VueJs', 'Bootstrap', 'Spring', 'SaSS'],
   Misc: ['Git', 'AWS', 'WordPress (minimal)'],
 } as Skills;
@@ -50,10 +50,10 @@ onMounted(() => {
 </script>
 
 <template>
-  <div id="AboutMe-section" class="about-container h-screen w-full bg-black text-zinc-300 relative">
-    <div class="main p-12 flex flex-col">
-      <div class="text-4xl mb-10">About me</div>
-      <div class="flex flex-col w-full h-3/4 bg-zinc-900 rounded-lg p-8 justify-center relative overflow-hidden">
+  <div id="AboutMe-section" class="about-container min:h-screen w-full bg-black text-zinc-300 relative">
+    <div class="main px-6 sm:px-[2vw] py-12 flex flex-col">
+      <div class="section-header">About me</div>
+      <div class="flex flex-col w-full h-3/4 bg-zinc-900 rounded-lg p-6 justify-center relative overflow-hidden">
         <div class="section about-info relative">
           <div class="mb-4 whitespace-pre-wrap">{{ aboutInfoText }}</div>
         </div>
@@ -131,11 +131,11 @@ onMounted(() => {
               </svg>
             </a>
         </div>
-        <img
+        <!-- <img
           class="h-full w-auto absolute -bottom-2/3 right-0 opacity-15 rounded-md hover:-bottom-1/3 hover:opacity-75 transition-all duration-500"
           :src="seal_with_rat_in_hat_ai_clean"
           alt="user icon"
-        >
+        > -->
       </div>
     </div>
     <SectionNavi/>
@@ -143,21 +143,47 @@ onMounted(() => {
 </template>
 
 <style>
-  .section::after
-   {
-    content: "";
-    position: absolute;
-    bottom: 0px;
-    left: 0;
-    height: 1px;
-    width: 40%;
-    background-color: #a1a1aa;
-  }
+.section::after
+  {
+  content: "";
+  position: absolute;
+  bottom: 0px;
+  left: 0;
+  height: 1px;
+  width: 40%;
+  background-color: #a1a1aa;
+}
 
-  a:hover{
-    background: none;
-    color: inherit;
-    text-decoration: none;
-    outline: none;
+a:hover{
+  background: none;
+  color: inherit;
+  text-decoration: none;
+  outline: none;
+}
+
+
+@media (max-width: 768px) {
+  .section::after {
+    width: 100%;
   }
+}
+
+::-webkit-scrollbar {
+  height: 8px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #a1a1aa;
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #71717a;
+}
+
+::-webkit-scrollbar-track {
+  background: #e4e4e7;
+  border-radius: 10px;
+}
+
 </style>

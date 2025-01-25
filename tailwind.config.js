@@ -2,7 +2,14 @@
 export default {
   content: ['./index.html', './src/**/*.{vue,js,ts,jsx,tsx}'],
   theme: {
-    extend: {},
+    extend: {
+      padding: {
+        scale: 'calc(2vw)',
+      },
+      fontSize: {
+        clamp: 'calc(24px - 1.2vmin)',
+      },
+    },
   },
   plugins: [],
 }
