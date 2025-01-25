@@ -50,8 +50,8 @@ onMounted(() => {
 </script>
 
 <template>
-  <div id="AboutMe-section" class="about-container min:h-screen w-full bg-black text-zinc-300 relative">
-    <div class="main px-6 sm:px-[2vw] py-12 flex flex-col">
+  <div id="AboutMe-section" class="about-container min-h-screen w-full bg-black text-zinc-300 relative">
+    <div class="main px-6 sm:px-[2vw] py-14 flex flex-col">
       <div class="section-header">About me</div>
       <div class="flex flex-col w-full h-3/4 bg-zinc-900 rounded-lg p-6 justify-center relative overflow-hidden">
         <div class="section about-info relative">
@@ -61,7 +61,7 @@ onMounted(() => {
           <div class="text-base font-semibold block my-2">Experience / skills</div>
           <SkillTable :Skills="Skills" />
         </div>
-        <div class="contact flex items-center my-2 gap-3 flex-shrink-1">
+        <div class="contact flex items-center mt-2 gap-3 flex-shrink-1">
           <span class="text-lg font-semibold">Contact me: </span>
           <button title="Open email" id="emailButton">
             <svg
@@ -131,11 +131,11 @@ onMounted(() => {
               </svg>
             </a>
         </div>
-        <!-- <img
-          class="h-full w-auto absolute -bottom-2/3 right-0 opacity-15 rounded-md hover:-bottom-1/3 hover:opacity-75 transition-all duration-500"
+        <img
+          class="seal-image h-4/5 w-auto absolute -bottom-2/3 right-0 opacity-15 rounded-md hover:-bottom-1/3 hover:opacity-75 transition-all duration-500 "
           :src="seal_with_rat_in_hat_ai_clean"
           alt="user icon"
-        > -->
+        >
       </div>
     </div>
     <SectionNavi/>
@@ -165,6 +165,9 @@ a:hover{
 @media (max-width: 768px) {
   .section::after {
     width: 100%;
+  }
+  .seal-image {
+    display: none;
   }
 }
 

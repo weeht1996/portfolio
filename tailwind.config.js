@@ -3,6 +3,9 @@ export default {
   content: ['./index.html', './src/**/*.{vue,js,ts,jsx,tsx}'],
   theme: {
     extend: {
+      screens: {
+        'sm-landscape': { raw: '(max-width: 950px) and (orientation: landscape)' },
+      },
       padding: {
         scale: 'calc(2vw)',
       },
