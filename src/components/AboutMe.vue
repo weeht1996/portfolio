@@ -86,7 +86,7 @@ onMounted(() => {
             <div v-if="clipTooltip" class="absolute -top-6 -left-1 bg-white rounded text-xs text-zinc-900 p-1">Copied!</div>
           </button>
             <span class="text-lg font-semibold hidden xs:block">My  Résumé:</span>
-            <a title="Download resume" href="https://drive.google.com/uc?export=download&id=1-q0nF03pXGRBbsCLoSegguE7snZXFR-G" download target="_blank" rel="noopener noreferrer">
+            <a title="Download resume" href="https://drive.google.com/uc?export=download&id=1BtEFLTafhZgg6lETnaf2keMU4ozPRCX1" download target="_blank" rel="noopener noreferrer">
               <svg height="30px" width="30px" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
                 viewBox="0 0 512 512" xml:space="preserve">
                 <g>
