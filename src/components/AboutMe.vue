@@ -15,10 +15,10 @@ I value routines and self-discipline, which keep me grounded and help me navigat
 
 Lately, I've been working on improving my communication skills, as I recognize that the ability to clearly articulate ideas is essential to building meaningful connections and achieving success—both personally and professionally.. `;
 const Skills = {
-  Languages: ['HTML/CSS', 'Python', 'JavaScript', 'TypeScript', 'Java', 'PHP'],
-  Databases: ['MySQL', 'NoSql'],
-  Frameworks: ['ReactJs', 'VueJs', 'Bootstrap', 'Spring', 'SaSS'],
-  Misc: ['Git', 'AWS', 'WordPress (minimal)'],
+  'Languages': ['HTML/CSS', 'Python', 'JavaScript', 'TypeScript', 'Java', 'PHP'],
+  'Databases': ['MySQL', 'NoSql'],
+  'Frameworks/Libraries': ['ReactJs', 'NextJs', 'VueJs', 'Vite', 'Bootstrap', 'Spring Boot', 'SaSS', 'Tailwind', 'Laravel'],
+  'Misc': ['Git', 'AWS', 'WordPress (minimal)', 'Docker (Containerization)'],
 } as Skills;
 
 onMounted(() => {
@@ -45,7 +45,6 @@ onMounted(() => {
     });
   }
 });
-
 
 </script>
 
@@ -86,8 +85,8 @@ onMounted(() => {
             </svg>
             <div v-if="clipTooltip" class="absolute -top-6 -left-1 bg-white rounded text-xs text-zinc-900 p-1">Copied!</div>
           </button>
-            <span class="text-lg font-semibold">My  Résumé:</span>
-            <a title="Download resume" href="https://drive.google.com/uc?export=download&id=1ehd-5m17Ty783iILDfkveyiHEE5zFaCm" download target="_blank" rel="noopener noreferrer">
+            <span class="text-lg font-semibold hidden xs:block">My  Résumé:</span>
+            <a title="Download resume" href="https://drive.google.com/uc?export=download&id=1-q0nF03pXGRBbsCLoSegguE7snZXFR-G" download target="_blank" rel="noopener noreferrer">
               <svg height="30px" width="30px" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
                 viewBox="0 0 512 512" xml:space="preserve">
                 <g>

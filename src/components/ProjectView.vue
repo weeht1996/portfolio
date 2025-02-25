@@ -67,7 +67,7 @@ onMounted(() => {
 
 <template>
   <div class="project-container flex flex-col items-start max-w-[400px] mt-2">
-    <div class="images-container relative h-[300px] w-full">
+    <div class="images-container relative h-[280px] w-full">
       <button
         class="img-hover-container"
         @click="$emit('openOverlay')"
@@ -96,20 +96,20 @@ onMounted(() => {
       </button>
     </div>
     <div class="info-container w-full flex flex-col">
-      <div class="info-top-bar flex justify-between items-center relative mb-2">
-        <div class="project-title text-2xl w-full text-left" :href="latestCommit?.url">{{ projectCard.title }}</div>
-        <div class="library-container flex justify-end gap-2 mb-2">
+      <div class="info-top-bar flex justify-between items-start relative mb-2 gap-1 flex-col sm:flex-row sm:items-center">
+        <div class="project-title text-2xl text-left" :href="latestCommit?.url">{{ projectCard.title }}</div>
+        <div class="library-container flex justify-start sm:justify-end gap-2 mb-2">
           <div v-for="lib in projectCard.languages" :key="lib.name">
-            <img :src="lib.icon" :alt="`${lib.name} icon`" :title="lib.name" width="30px" height="30px" class="hover:shadow-lg hover:shadow-blue-500/50">
+            <img :src="lib.icon" :alt="`${lib.name} icon`" :title="lib.name" width="20px" height="20px" class="hover:shadow-lg hover:shadow-blue-500/50">
           </div>
         </div>
       </div>
       <div class="info-bot-bar relative flex flex-col my-2">
-        <span>{{ projectCard.desc }}</span>
+        <span class="h-[120px] overflow-y-auto">{{ projectCard.desc }}</span>
         <div class="links-bar flex gap-4 text-blue-600">
           <a class="rounded-sm" :href="projectCard.githubLink" target="_blank" rel="noopener noreferrer">Github Link</a>
           <a v-if="projectCard.hostedLink" class="rounded-sm" :href="projectCard.hostedLink" target="_blank" rel="noopener noreferrer">Host Link</a>
-          <span v-else>Not hosted</span>
+          <span v-else class="text-gray-500">Not hosted</span>
         </div>
         <div v-if="latestCommit" class="git-commit-container mt-2">
           <div class="git-commit-bar flex flex-1 ml-4 relative p-1 pt-0">

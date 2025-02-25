@@ -1,6 +1,6 @@
 export interface Skills {
   Languages: string[]
   Databases: string[]
-  Frameworks: string[]
+  'Frameworks/Libraries': string[]
   Misc: string[]
 }

@@ -5,6 +5,7 @@ export default {
     extend: {
       screens: {
         'sm-landscape': { raw: '(max-width: 950px) and (orientation: landscape)' },
+        xs: '420px',
       },
       padding: {
         scale: 'calc(2vw)',
